@@ -1,0 +1,19 @@
+{
+  "training_samples": 13792,
+  "f1_score": 76.3,
+  "languages": 3,
+  "detection_tasks": 2,
+  "sarcasm_samples": 4944,
+  "misinfo_samples": 4944,
+  "label_distribution": {
+    "sarcasm_rate": 35.8,
+    "misinfo_rate": 35.8
+  },
+  "language_distribution": {
+    "hi-en": 4771,
+    "ta-en": 4250,
+    "en": 4771
+  },
+  "generated_at": "2026-02-23T15:27:35.433657",
+  "source": "generated"
+}

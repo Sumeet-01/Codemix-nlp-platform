@@ -1,0 +1,201 @@
+C:\Users\Sumeet Sangwan\Desktop\Vishwakarma University\Vishwakarma University 3rd Year\Sem 2\NLP\Project\backend\.venv\Lib\site-packages\pydantic\_internal\_fields.py:151: UserWarning: Field "model_version" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [18676]
+INFO:     Waiting for application startup.
+2026-02-23 21:14:06 [info     ] Starting CodeMix NLP Platform  environment=development version=1.0.0
+2026-02-23 21:14:06,359 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-23 21:14:06,359 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("users")
+2026-02-23 21:14:06,359 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-02-23 21:14:06,363 INFO sqlalchemy.engine.Engine PRAGMA temp.table_info("users")
+2026-02-23 21:14:06,363 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-02-23 21:14:06,365 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("analyses")
+2026-02-23 21:14:06,365 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-02-23 21:14:06,367 INFO sqlalchemy.engine.Engine PRAGMA temp.table_info("analyses")
+2026-02-23 21:14:06,367 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-02-23 21:14:06,371 INFO sqlalchemy.engine.Engine 
+CREATE TABLE users (
+	id CHAR(32) NOT NULL, 
+	email VARCHAR(255) NOT NULL, 
+	password_hash VARCHAR(255) NOT NULL, 
+	full_name VARCHAR(255) NOT NULL, 
+	is_active BOOLEAN NOT NULL, 
+	is_verified BOOLEAN NOT NULL, 
+	api_key VARCHAR(255), 
+	created_at DATETIME DEFAULT (CURRENT_TIMESTAMP) NOT NULL, 
+	updated_at DATETIME DEFAULT (CURRENT_TIMESTAMP) NOT NULL, 
+	PRIMARY KEY (id)
+)
+
+
+2026-02-23 21:14:06,371 INFO sqlalchemy.engine.Engine [no key 0.00022s] ()
+2026-02-23 21:14:06,411 INFO sqlalchemy.engine.Engine CREATE UNIQUE INDEX ix_users_api_key ON users (api_key)
+2026-02-23 21:14:06,411 INFO sqlalchemy.engine.Engine [no key 0.00028s] ()
+2026-02-23 21:14:06,440 INFO sqlalchemy.engine.Engine CREATE UNIQUE INDEX ix_users_email ON users (email)
+2026-02-23 21:14:06,440 INFO sqlalchemy.engine.Engine [no key 0.00016s] ()
+2026-02-23 21:14:06,459 INFO sqlalchemy.engine.Engine 
+CREATE TABLE analyses (
+	id CHAR(32) NOT NULL, 
+	user_id CHAR(32), 
+	text TEXT NOT NULL, 
+	text_hash VARCHAR(64) NOT NULL, 
+	sarcasm_score FLOAT NOT NULL, 
+	sarcasm_label BOOLEAN NOT NULL, 
+	misinformation_score FLOAT NOT NULL, 
+	misinformation_label BOOLEAN NOT NULL, 
+	model_version VARCHAR(100) NOT NULL, 
+	language VARCHAR(20) NOT NULL, 
+	processing_time_ms INTEGER NOT NULL, 
+	is_cached BOOLEAN NOT NULL, 
+	created_at DATETIME DEFAULT (CURRENT_TIMESTAMP) NOT NULL, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(user_id) REFERENCES users (id) ON DELETE SET NULL
+)
+
+
+2026-02-23 21:14:06,459 INFO sqlalchemy.engine.Engine [no key 0.00044s] ()
+2026-02-23 21:14:06,481 INFO sqlalchemy.engine.Engine CREATE INDEX ix_analyses_user_id ON analyses (user_id)
+2026-02-23 21:14:06,481 INFO sqlalchemy.engine.Engine [no key 0.00026s] ()
+2026-02-23 21:14:06,497 INFO sqlalchemy.engine.Engine CREATE INDEX ix_analyses_text_hash ON analyses (text_hash)
+2026-02-23 21:14:06,497 INFO sqlalchemy.engine.Engine [no key 0.00014s] ()
+2026-02-23 21:14:06,520 INFO sqlalchemy.engine.Engine CREATE INDEX ix_analyses_created_at ON analyses (created_at)
+2026-02-23 21:14:06,521 INFO sqlalchemy.engine.Engine [no key 0.00018s] ()
+2026-02-23 21:14:06,547 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-23 21:14:06 [info     ] Database tables created
+2026-02-23 21:14:06 [info     ] Database tables initialized
+2026-02-23 21:14:06 [info     ] DEMO_MODE enabled ù using mock ML predictions (no torch required)
+2026-02-23 21:14:06 [info     ] ML model loaded successfully   model=xlm-roberta-large
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+2026-02-23 21:14:34 [info     ] Request started                method=POST path=/api/v1/auth/register request_id=4e7c3fbd
+2026-02-23 21:14:34,758 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-23 21:14:34,758 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.password_hash, users.full_name, users.is_active, users.is_verified, users.api_key, users.created_at, users.updated_at 
+FROM users 
+WHERE users.email = ?
+2026-02-23 21:14:34,758 INFO sqlalchemy.engine.Engine [generated in 0.00026s] ('user@test.com',)
+2026-02-23 21:14:35,206 INFO sqlalchemy.engine.Engine INSERT INTO users (id, email, password_hash, full_name, is_active, is_verified, api_key) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING created_at, updated_at
+2026-02-23 21:14:35,206 INFO sqlalchemy.engine.Engine [generated in 0.00038s] ('b51cb80427804ade8cebbdb156bb321d', 'user@test.com', '$2b$12$jGV4ze/bxQzswaDO7i1lwe1pWC.LMgqWVXwf9LqVd3pEjRsXM5xuK', 'Test User', 1, 0, None)
+2026-02-23 21:14:35,227 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.password_hash, users.full_name, users.is_active, users.is_verified, users.api_key, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-23 21:14:35,227 INFO sqlalchemy.engine.Engine [generated in 0.00023s] ('b51cb80427804ade8cebbdb156bb321d',)
+2026-02-23 21:14:35 [info     ] User created                   email=user@test.com user_id=b51cb804-2780-4ade-8ceb-bdb156bb321d
+2026-02-23 21:14:35,237 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-23 21:14:35 [info     ] Request completed              method=POST path=/api/v1/auth/register process_time_ms=523.5 request_id=4e7c3fbd status_code=201
+INFO:     127.0.0.1:49772 - "POST /api/v1/auth/register HTTP/1.1" 201 Created
+2026-02-23 21:14:55 [info     ] Request started                method=POST path=/api/v1/auth/login request_id=83656b75
+2026-02-23 21:14:55,020 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-23 21:14:55,022 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.password_hash, users.full_name, users.is_active, users.is_verified, users.api_key, users.created_at, users.updated_at 
+FROM users 
+WHERE users.email = ?
+2026-02-23 21:14:55,022 INFO sqlalchemy.engine.Engine [cached since 20.25s ago] ('user@test.com',)
+2026-02-23 21:14:55 [info     ] User authenticated             user_id=b51cb804-2780-4ade-8ceb-bdb156bb321d
+2026-02-23 21:14:55 [info     ] User logged in                 user_id=b51cb804-2780-4ade-8ceb-bdb156bb321d
+2026-02-23 21:14:55,575 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-23 21:14:55 [info     ] Request completed              method=POST path=/api/v1/auth/login process_time_ms=568.53 request_id=83656b75 status_code=200
+INFO:     127.0.0.1:52230 - "POST /api/v1/auth/login HTTP/1.1" 200 OK
+2026-02-23 21:14:55 [info     ] Request started                method=GET path=/api/v1/users/me request_id=ffef62ca
+2026-02-23 21:14:55,609 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-23 21:14:55,613 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.password_hash, users.full_name, users.is_active, users.is_verified, users.api_key, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-23 21:14:55,613 INFO sqlalchemy.engine.Engine [generated in 0.00048s] ('b51cb80427804ade8cebbdb156bb321d',)
+2026-02-23 21:14:55,622 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-23 21:14:55 [info     ] Request completed              method=GET path=/api/v1/users/me process_time_ms=31.34 request_id=ffef62ca status_code=200
+INFO:     127.0.0.1:52231 - "GET /api/v1/users/me HTTP/1.1" 200 OK
+2026-02-23 21:15:06 [info     ] Request started                method=POST path=/api/v1/auth/login request_id=52780c03
+2026-02-23 21:15:06,095 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-23 21:15:06,096 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.password_hash, users.full_name, users.is_active, users.is_verified, users.api_key, users.created_at, users.updated_at 
+FROM users 
+WHERE users.email = ?
+2026-02-23 21:15:06,096 INFO sqlalchemy.engine.Engine [cached since 31.33s ago] ('user@test.com',)
+2026-02-23 21:15:06 [info     ] User authenticated             user_id=b51cb804-2780-4ade-8ceb-bdb156bb321d
+2026-02-23 21:15:06 [info     ] User logged in                 user_id=b51cb804-2780-4ade-8ceb-bdb156bb321d
+2026-02-23 21:15:06,600 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-23 21:15:06 [info     ] Request completed              method=POST path=/api/v1/auth/login process_time_ms=512.76 request_id=52780c03 status_code=200
+INFO:     127.0.0.1:61955 - "POST /api/v1/auth/login HTTP/1.1" 200 OK
+2026-02-23 21:15:06 [info     ] Request started                method=POST path=/api/v1/analyze/ request_id=e6ecb079
+2026-02-23 21:15:06 [info     ] Request completed              method=POST path=/api/v1/analyze/ process_time_ms=0.0 request_id=e6ecb079 status_code=307
+INFO:     127.0.0.1:52147 - "POST /api/v1/analyze/ HTTP/1.1" 307 Temporary Redirect
+2026-02-23 21:15:06 [info     ] Request started                method=POST path=/api/v1/analyze request_id=b2047a28
+2026-02-23 21:15:06,834 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-23 21:15:06,844 INFO sqlalchemy.engine.Engine INSERT INTO analyses (id, user_id, text, text_hash, sarcasm_score, sarcasm_label, misinformation_score, misinformation_label, model_version, language, processing_time_ms, is_cached) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING created_at
+2026-02-23 21:15:06,844 INFO sqlalchemy.engine.Engine [generated in 0.00032s] ('e576940b3f634070981762e0e6a777f0', None, 'Haan bilkul, government ne bahut kaam kiya hai 5G towers se corona failta hai!!!', 'bd92dc9022225ae39836137a5b157589e2757159fe7ed1c096e75fe7ade08f17', 0.4073, 0, 0.1829, 0, 'demo-v1', 'hi-en', 5, 0)
+2026-02-23 21:15:06,852 INFO sqlalchemy.engine.Engine SELECT analyses.id, analyses.user_id, analyses.text, analyses.text_hash, analyses.sarcasm_score, analyses.sarcasm_label, analyses.misinformation_score, analyses.misinformation_label, analyses.model_version, analyses.language, analyses.processing_time_ms, analyses.is_cached, analyses.created_at 
+FROM analyses 
+WHERE analyses.id = ?
+2026-02-23 21:15:06,852 INFO sqlalchemy.engine.Engine [generated in 0.00035s] ('e576940b3f634070981762e0e6a777f0',)
+2026-02-23 21:15:06,858 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-23 21:15:06 [info     ] Request completed              method=POST path=/api/v1/analyze process_time_ms=36.16 request_id=b2047a28 status_code=200
+INFO:     127.0.0.1:52147 - "POST /api/v1/analyze HTTP/1.1" 200 OK
+2026-02-23 21:15:07 [info     ] Request started                method=GET path=/api/v1/analytics/platform-stats request_id=94e230b9
+2026-02-23 21:15:07 [info     ] Request completed              method=GET path=/api/v1/analytics/platform-stats process_time_ms=12.65 request_id=94e230b9 status_code=200
+INFO:     127.0.0.1:52148 - "GET /api/v1/analytics/platform-stats HTTP/1.1" 200 OK
+2026-02-23 21:26:06 [info     ] Request started                method=GET path=/ request_id=ae9451eb
+2026-02-23 21:26:07 [info     ] Request started                method=GET path=/analytics/platform-stats request_id=cc8b2a5a
+2026-02-23 21:26:08 [info     ] Request completed              method=GET path=/ process_time_ms=2283.51 request_id=ae9451eb status_code=200
+INFO:     127.0.0.1:51852 - "GET / HTTP/1.1" 200 OK
+2026-02-23 21:26:08 [info     ] Request completed              method=GET path=/analytics/platform-stats process_time_ms=808.48 request_id=cc8b2a5a status_code=404
+INFO:     127.0.0.1:63398 - "GET /analytics/platform-stats HTTP/1.1" 404 Not Found
+2026-02-23 21:26:08 [info     ] Request started                method=GET path=/favicon.ico request_id=0baf645b
+2026-02-23 21:26:08 [info     ] Request completed              method=GET path=/favicon.ico process_time_ms=3.01 request_id=0baf645b status_code=404
+INFO:     127.0.0.1:51852 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+2026-02-23 21:26:31 [info     ] Request started                method=OPTIONS path=/auth/login request_id=2e778485
+2026-02-23 21:26:31 [info     ] Request completed              method=OPTIONS path=/auth/login process_time_ms=116.39 request_id=2e778485 status_code=200
+INFO:     127.0.0.1:53544 - "OPTIONS /auth/login HTTP/1.1" 200 OK
+2026-02-23 21:26:31 [info     ] Request started                method=POST path=/auth/login request_id=3c62f326
+2026-02-23 21:26:31 [info     ] Request completed              method=POST path=/auth/login process_time_ms=0.0 request_id=3c62f326 status_code=404
+INFO:     127.0.0.1:53544 - "POST /auth/login HTTP/1.1" 404 Not Found
+2026-02-23 21:27:02 [info     ] Request started                method=OPTIONS path=/auth/register request_id=a1bb92ef
+2026-02-23 21:27:02 [info     ] Request completed              method=OPTIONS path=/auth/register process_time_ms=0.0 request_id=a1bb92ef status_code=200
+INFO:     127.0.0.1:50060 - "OPTIONS /auth/register HTTP/1.1" 200 OK
+2026-02-23 21:27:02 [info     ] Request started                method=POST path=/auth/register request_id=fb57b8a0
+2026-02-23 21:27:02 [info     ] Request completed              method=POST path=/auth/register process_time_ms=1.06 request_id=fb57b8a0 status_code=404
+INFO:     127.0.0.1:50060 - "POST /auth/register HTTP/1.1" 404 Not Found
+2026-02-23 21:27:07 [info     ] Request started                method=GET path=/analytics/platform-stats request_id=14753a10
+2026-02-23 21:27:07 [info     ] Request completed              method=GET path=/analytics/platform-stats process_time_ms=3.5 request_id=14753a10 status_code=404
+INFO:     127.0.0.1:50060 - "GET /analytics/platform-stats HTTP/1.1" 404 Not Found
+2026-02-23 21:32:38 [info     ] Request started                method=GET path=/analytics/platform-stats request_id=4613d3d8
+2026-02-23 21:32:38 [info     ] Request completed              method=GET path=/analytics/platform-stats process_time_ms=4.4 request_id=4613d3d8 status_code=404
+INFO:     127.0.0.1:57734 - "GET /analytics/platform-stats HTTP/1.1" 404 Not Found
+2026-02-23 22:27:11 [info     ] Request started                method=GET path=/analytics/platform-stats request_id=931e11c6
+2026-02-23 22:27:14 [info     ] Request completed              method=GET path=/analytics/platform-stats process_time_ms=3065.16 request_id=931e11c6 status_code=404
+INFO:     127.0.0.1:49252 - "GET /analytics/platform-stats HTTP/1.1" 404 Not Found
+2026-02-23 22:29:43 [info     ] Request started                method=GET path=/api/v1/analytics/stats request_id=529f0fcc
+2026-02-23 22:29:45 [error    ] Database session error
+Traceback (most recent call last):
+  File "C:\Users\Sumeet Sangwan\Desktop\Vishwakarma University\Vishwakarma University 3rd Year\Sem 2\NLP\Project\backend\app\core\database.py", line 60, in get_db
+    yield session
+  File "C:\Users\Sumeet Sangwan\Desktop\Vishwakarma University\Vishwakarma University 3rd Year\Sem 2\NLP\Project\backend\.venv\Lib\site-packages\fastapi\routing.py", line 285, in app
+    raise e
+  File "C:\Users\Sumeet Sangwan\Desktop\Vishwakarma University\Vishwakarma University 3rd Year\Sem 2\NLP\Project\backend\.venv\Lib\site-packages\fastapi\routing.py", line 275, in app
+    solved_result = await solve_dependencies(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumeet Sangwan\Desktop\Vishwakarma University\Vishwakarma University 3rd Year\Sem 2\NLP\Project\backend\.venv\Lib\site-packages\fastapi\dependencies\utils.py", line 598, in solve_dependencies
+    solved = await call(**sub_values)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumeet Sangwan\Desktop\Vishwakarma University\Vishwakarma University 3rd Year\Sem 2\NLP\Project\backend\app\api\deps.py", line 54, in get_current_user
+fastapi.exceptions.HTTPException: 401: Could not validate credentials
+2026-02-23 22:29:48 [info     ] Request completed              method=GET path=/api/v1/analytics/stats process_time_ms=5115.02 request_id=529f0fcc status_code=401
+INFO:     127.0.0.1:61557 - "GET /api/v1/analytics/stats HTTP/1.1" 401 Unauthorized
+2026-02-23 22:30:29 [info     ] Request started                method=GET path=/health request_id=3bb2f24f
+2026-02-23 22:30:30 [info     ] Request completed              method=GET path=/health process_time_ms=347.78 request_id=3bb2f24f status_code=200
+INFO:     127.0.0.1:51810 - "GET /health HTTP/1.1" 200 OK
+2026-02-23 22:30:34 [info     ] Request started                method=GET path=/api/v1/analytics/stats request_id=8327bac8
+2026-02-23 22:30:34 [error    ] Database session error
+Traceback (most recent call last):
+  File "C:\Users\Sumeet Sangwan\Desktop\Vishwakarma University\Vishwakarma University 3rd Year\Sem 2\NLP\Project\backend\app\core\database.py", line 60, in get_db
+    yield session
+  File "C:\Users\Sumeet Sangwan\Desktop\Vishwakarma University\Vishwakarma University 3rd Year\Sem 2\NLP\Project\backend\.venv\Lib\site-packages\fastapi\routing.py", line 285, in app
+    raise e
+  File "C:\Users\Sumeet Sangwan\Desktop\Vishwakarma University\Vishwakarma University 3rd Year\Sem 2\NLP\Project\backend\.venv\Lib\site-packages\fastapi\routing.py", line 275, in app
+    solved_result = await solve_dependencies(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumeet Sangwan\Desktop\Vishwakarma University\Vishwakarma University 3rd Year\Sem 2\NLP\Project\backend\.venv\Lib\site-packages\fastapi\dependencies\utils.py", line 598, in solve_dependencies
+    solved = await call(**sub_values)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumeet Sangwan\Desktop\Vishwakarma University\Vishwakarma University 3rd Year\Sem 2\NLP\Project\backend\app\api\deps.py", line 54, in get_current_user
+fastapi.exceptions.HTTPException: 401: Could not validate credentials
+2026-02-23 22:30:34 [info     ] Request completed              method=GET path=/api/v1/analytics/stats process_time_ms=117.83 request_id=8327bac8 status_code=401
+INFO:     127.0.0.1:56118 - "GET /api/v1/analytics/stats HTTP/1.1" 401 Unauthorized
